@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private Module[] modules = {
             new Module("Dictionary", DictionaryActivity.class),
-            new Module("Lessons", LessonActivity.class),
+            new Module("Lessons", LessonsActivity.class),
             new Module("Test Your Knowledge", QuizActivity.class),
     };
 

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Slang</string>
+    <string name="lesson">Lesson</string>
+    <string-array name="lesson_names">
+        <item>Colors</item>
+        <item>Alphabet</item>
+        <item>Fruits</item>
+    </string-array>
 </resources>
