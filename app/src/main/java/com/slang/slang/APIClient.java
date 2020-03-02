@@ -3,6 +3,7 @@ package com.slang.slang;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +17,7 @@ public class APIClient {
     static String TAG = "HIIII";
 
     //static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/";
-    static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/db/terms?category=numbers";
+    static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/db/categories";
     //static String url = "http://google.com/";
 
     private static class Retrieve implements Runnable {
@@ -38,9 +39,9 @@ public class APIClient {
                 res = stringBuffer.toString();
                 return;
             } catch (MalformedURLException e) {
-                Log.d(TAG, "GetCategories: " + e.getStackTrace());
+                Log.d(TAG, "GetCategories: " + e.getStackTrace()+ " " + e.getMessage());
             } catch (IOException e){
-                Log.d(TAG, "GetCategories: " + e.getStackTrace());
+                Log.d(TAG, "GetCategories: " + e.getStackTrace()+ " " + e.getMessage());
             }
             res = "";
             return;
@@ -55,5 +56,13 @@ public class APIClient {
         executor.execute(t);
         while (t.res == null){}
         Log.d(TAG, t.res);
+        ArrayList<String> categories = new ArrayList<String>();
+        while(t.res.length() > 1){
+            t.res = t.res.substring(t.res.indexOf("\"") + 1);
+            String category = t.res.substring(0, t.res.indexOf("\""));
+            categories.add(category);
+            t.res = t.res.substring(t.res.indexOf("\"") + 1);
+        }
+        System.out.println(categories);
     }
 }
