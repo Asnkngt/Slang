@@ -1,6 +1,7 @@
 package com.slang.slang;
 
 import androidx.appcompat.app.AppCompatActivity;
+import retrofit2.Retrofit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -66,8 +67,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initTable(2);
+
+        APIClient.GetCategories();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/")
+                .build();
 
     }
 }
