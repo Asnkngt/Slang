@@ -16,8 +16,8 @@ import java.util.concurrent.Future;
 public class APIClient {
     static String TAG = "HIIII";
 
-    //static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/";
-    static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/db/categories";
+    static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/";
+    //static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/db/categories";
     //static String url = "http://google.com/";
 
     private static class Retrieve implements Runnable {
@@ -50,9 +50,9 @@ public class APIClient {
 
     static ExecutorService executor = Executors.newFixedThreadPool(1);
 
-    static void GetCategories(){
+    static ArrayList<String> GetCategories(){
         Retrieve t = new Retrieve();
-        t.url = url;
+        t.url = url+"db/categories";
         executor.execute(t);
         while (t.res == null){}
         Log.d(TAG, t.res);
@@ -64,5 +64,30 @@ public class APIClient {
             t.res = t.res.substring(t.res.indexOf("\"") + 1);
         }
         System.out.println(categories);
+        return categories;
+    }
+
+    static ArrayList<String> GetTermsInCategory(String category){
+        Retrieve t = new Retrieve();
+        t.url = url+"/db/terms?category="+category;
+        executor.execute(t);
+        while (t.res == null){}
+        t.res = t.res.substring(1,t.res.length()-1);
+        Log.d(TAG, t.res);
+        ArrayList<String> terms = new ArrayList<String>();
+        while(t.res.length() > 2){
+            t.res = t.res.substring(t.res.indexOf("\"") + 1);
+            String term = t.res.substring(0, t.res.indexOf("\""));
+            t.res = t.res.substring(t.res.indexOf("\"") + 3);
+            String video = t.res.substring(0, t.res.indexOf("\""));
+            t.res = t.res.substring(t.res.indexOf("\"") + 1);
+            if(!terms.contains(term)) {
+                terms.add(term);
+                terms.add(video);
+            }
+            t.res = t.res.substring(t.res.indexOf("]") + 1);
+        }
+        System.out.println(terms);
+        return terms;
     }
 }

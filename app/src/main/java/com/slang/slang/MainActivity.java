@@ -70,10 +70,6 @@ public class MainActivity extends AppCompatActivity {
         initTable(2);
 
         APIClient.GetCategories();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/")
-                .build();
-
+        APIClient.GetTermsInCategory("numbers");
     }
 }
