@@ -16,7 +16,8 @@ public class APIClient {
     static String TAG = "HIIII";
 
     //static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/";
-    static String url = "http://google.com/";
+    static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/db/terms?category=numbers";
+    //static String url = "http://google.com/";
 
     private static class Retrieve implements Runnable {
         public String url = null;
