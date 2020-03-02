@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initTable(2);
 
-        APIClient.GetCategories();
-        APIClient.GetTermsInCategory("numbers");
+        //APIClient.GetCategories();
+        //APIClient.GetTermsInCategory("numbers");
     }
 }

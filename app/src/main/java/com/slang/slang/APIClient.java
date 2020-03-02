@@ -87,7 +87,7 @@ public class APIClient {
             }
             t.res = t.res.substring(t.res.indexOf("]") + 1);
         }
-        System.out.println(terms);
+        //System.out.println(terms);
         return terms;
     }
 }
