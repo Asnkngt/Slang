@@ -81,7 +81,28 @@ public class APIClient {
     }
 
     static ArrayList<String> GetTermsInCategory(String category){
-        String htmlRes = getStr("/db/terms?category="+category);
+        String htmlRes = getStr("/db/categories/"+category);
+
+        htmlRes = htmlRes.substring(1,htmlRes.length()-1);
+        Log.d(TAG, htmlRes);
+        ArrayList<String> terms = new ArrayList<String>();
+        while(htmlRes.length() > 2){
+            htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 1);
+            String term = htmlRes.substring(0, htmlRes.indexOf("\""));
+            htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 3);
+            String video = htmlRes.substring(0, htmlRes.indexOf("\""));
+            htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 1);
+            if(!terms.contains(term)) {
+                terms.add(term);
+                terms.add(video);
+            }
+            htmlRes = htmlRes.substring(htmlRes.indexOf("]") + 1);
+        }
+        //System.out.println(terms);
+        return terms;
+    }
+    static ArrayList<String> GetTerm(String english){
+        String htmlRes = getStr("/db/terms/" + english);
 
         htmlRes = htmlRes.substring(1,htmlRes.length()-1);
         Log.d(TAG, htmlRes);

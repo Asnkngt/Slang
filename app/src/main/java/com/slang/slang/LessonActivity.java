@@ -50,8 +50,14 @@ public class LessonActivity extends AppCompatActivity {
             case -1:
                 return;
             case DictionaryActivityCase:
+                data = data.toLowerCase();
                 titleText.setText("Dictionary");
-                term.setText(data);
+                terms = APIClient.GetTerm(data);
+                if(terms.size() == 0){
+                    term.setText("Word not found");
+                }else{
+                    term.setText(data);
+                }
                 break;
             case LessonsActivityCase:
                 titleText.setText(data);
