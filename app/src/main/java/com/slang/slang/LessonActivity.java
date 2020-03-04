@@ -20,6 +20,7 @@ public class LessonActivity extends AppCompatActivity {
     static final String SwitchKey = "SWITCH";
     static final int DictionaryActivityCase = 0;
     static final int LessonsActivityCase = 1;
+    static final int QuizActivityCase = 2;
 
     static final String DataKey = "DATA";
     private String data = null;
@@ -64,6 +65,11 @@ public class LessonActivity extends AppCompatActivity {
                 terms = APIClient.GetTermsInCategory(data);
                 term.setText(terms.get(0));
                 break;
+            case QuizActivityCase:
+                titleText.setText(data);
+                terms = APIClient.GetTermsInCategory(data);
+                term.setText("Quiz placeholder");
+                break;
         }
 
         //Log.d("HI", "onCreate: "+APIClient.GetTermsInCategory(category));
@@ -78,5 +84,4 @@ public class LessonActivity extends AppCompatActivity {
             vv.start();
         }
     }
-
 }

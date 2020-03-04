@@ -38,7 +38,6 @@ public class LessonsActivity extends AppCompatActivity {
 
         // Adding buttons to the vew based on the list of lesson names
         ArrayList<String> lessonNames = APIClient.GetCategories();//getResources().getStringArray(R.array.lesson_names);
-        lessonNames.add("numbers");
         LinearLayout ll = findViewById(R.id.lessons);
 
         for(int i = 0;i < lessonNames.size(); i++)

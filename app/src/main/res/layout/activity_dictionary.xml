@@ -6,12 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".DictionaryActivity">
 
-    <EditText
-        android:id="@+id/searchedTerm"
-        android:layout_width="291dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/button"
-        app:layout_constraintRight_toLeftOf="@id/button"/>
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button">
+
+        <EditText
+            android:id="@+id/searchedTerm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            app:layout_constraintBottom_toBottomOf="@id/button"
+            app:layout_constraintRight_toLeftOf="@id/button"/>
+    </FrameLayout>
 
     <Button
         android:id="@+id/button"
