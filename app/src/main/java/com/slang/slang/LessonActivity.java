@@ -15,11 +15,17 @@ import java.util.ArrayList;
 
 public class LessonActivity extends AppCompatActivity {
 
-    static String CategoryKey = "CATEGORY";
+    int type;
+
+    static final String SwitchKey = "SWITCH";
+    static final int DictionaryActivityCase = 0;
+    static final int LessonsActivityCase = 1;
+
+    static final String DataKey = "DATA";
+    private String data = null;
 
     private VideoView vv;
 
-    private String category = null;
     private MediaController mediacontroller;
     private Uri uri = null;
 
@@ -29,16 +35,36 @@ public class LessonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lesson);
 
         Intent intent = getIntent();
-        category = intent.getStringExtra(CategoryKey);
+        type = intent.getIntExtra(SwitchKey,-1);
+        data = intent.getStringExtra(DataKey);
 
-        TextView textView = findViewById(R.id.lesson_name);
-        textView.setText(category);
-        ArrayList<String> data = APIClient.GetTermsInCategory(category);
+        TextView titleText = findViewById(R.id.lesson_name);
+        titleText.setText(data);
+
+        TextView term = findViewById(R.id.term);
+
+
+        ArrayList<String> terms = new ArrayList<String>();
+
+        switch (type){
+            case -1:
+                return;
+            case DictionaryActivityCase:
+                titleText.setText("Dictionary");
+                term.setText(data);
+                break;
+            case LessonsActivityCase:
+                titleText.setText(data);
+                terms = APIClient.GetTermsInCategory(data);
+                term.setText(terms.get(0));
+                break;
+        }
+
         //Log.d("HI", "onCreate: "+APIClient.GetTermsInCategory(category));
         vv = findViewById(R.id.videoView);
         mediacontroller = new MediaController(this);
         mediacontroller.setAnchorView(vv);
-        if(data.size()>=2) {
+        if(terms.size()>=2) {
             //uri = Uri.parse(data.get(1));
             uri = Uri.parse("https://www.demonuts.com/Demonuts/smallvideo.mp4");
             Log.d("HI",uri.toString());

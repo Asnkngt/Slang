@@ -26,7 +26,8 @@ public class LessonsActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             startActivity(new Intent(LessonsActivity.this, LessonActivity.class)
-                    .putExtra(LessonActivity.CategoryKey,category));
+                    .putExtra(LessonActivity.SwitchKey, LessonActivity.LessonsActivityCase)
+                    .putExtra(LessonActivity.DataKey, category));
         }
     }
 
