@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -46,7 +47,18 @@ public class LessonsActivity extends AppCompatActivity {
             b.setOnClickListener(new LessonHandler(lessonNames.get(i)));
             ll.addView(b);
         }
+    }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d("Testing", "onPause");
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.d("Testing", "onDestroy");
     }
 
     public void selectLesson(View view){
