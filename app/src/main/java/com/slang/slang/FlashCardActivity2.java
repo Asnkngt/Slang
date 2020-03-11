@@ -39,7 +39,7 @@ public class FlashCardActivity2 extends AppCompatActivity {
             if (currentPosition == RecyclerView.NO_POSITION) {
                 return RecyclerView.NO_POSITION;
             }
-            
+
             flashCardObjects.get(currentPosition).restart();
 
             return currentPosition;

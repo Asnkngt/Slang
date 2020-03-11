@@ -20,10 +20,8 @@ public class QuizActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            /*
-            startActivity(new Intent(QuizActivity.this, FlashCardActivity2.class)
-                    .putExtra(FlashCardActivity2.SwitchKey, FlashCardActivity2.QuizActivityCase)
-                    .putExtra(FlashCardActivity2.DataKey, category));*/
+            startActivity(new Intent(QuizActivity.this, QuizActivity2.class)
+                    .putExtra(QuizActivity2.DataKey, category));
         }
     }
 

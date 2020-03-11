@@ -25,7 +25,7 @@ public class DictionaryActivity2 extends AppCompatActivity {
     private MediaController mediacontroller;
     private Uri uri = null;
 
-    ArrayList<String> terms = new ArrayList<String>();
+    private ArrayList<String> terms = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DictionaryActivity2"></activity>
-        <!-- remove this line later -->
+        <activity android:name=".QuizActivity2"></activity>
+        <activity android:name=".DictionaryActivity2" /> <!-- remove this line later -->
         <activity
             android:name=".FlashCardActivity2"
             android:parentActivityName=".FlashCardActivity" />
