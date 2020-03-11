@@ -6,15 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class LessonsActivity extends AppCompatActivity {
+public class FlashCardActivity extends AppCompatActivity {
     public static final String LESSON_NAME = "com.slang.slang.lesson_name";
 
     private class LessonHandler implements View.OnClickListener {
@@ -25,16 +22,15 @@ public class LessonsActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(LessonsActivity.this, LessonActivity.class)
-                    .putExtra(LessonActivity.SwitchKey, LessonActivity.LessonsActivityCase)
-                    .putExtra(LessonActivity.DataKey, category));
+            startActivity(new Intent(FlashCardActivity.this, FlashCardActivity2.class)
+                    .putExtra(FlashCardActivity2.DataKey, category));
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lessons);
+        setContentView(R.layout.activity_flashcard);
 
         // Adding buttons to the vew based on the list of lesson names
         ArrayList<String> lessonNames = APIClient.GetCategories();//getResources().getStringArray(R.array.lesson_names);
@@ -62,7 +58,7 @@ public class LessonsActivity extends AppCompatActivity {
     }
 
     public void selectLesson(View view){
-        Intent intent = new Intent(this, LessonActivity.class);
+        Intent intent = new Intent(this, FlashCardActivity2.class);
         Button button = (Button) view;
         String buttonText = button.getText().toString();
 

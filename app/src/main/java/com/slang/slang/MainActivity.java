@@ -1,7 +1,6 @@
 package com.slang.slang;
 
 import androidx.appcompat.app.AppCompatActivity;
-import retrofit2.Retrofit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private Module[] modules = {
             new Module("Dictionary", DictionaryActivity.class),
-            new Module("Lessons", LessonsActivity.class),
+            new Module("Flash Cards", FlashCardActivity.class),
             new Module("Test Your Knowledge", QuizActivity.class),
     };
 

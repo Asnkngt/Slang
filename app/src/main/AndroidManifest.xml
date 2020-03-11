@@ -15,10 +15,10 @@
         <activity android:name=".DictionaryActivity2"></activity>
         <!-- remove this line later -->
         <activity
-            android:name=".LessonActivity"
-            android:parentActivityName=".LessonsActivity" />
+            android:name=".FlashCardActivity2"
+            android:parentActivityName=".FlashCardActivity" />
         <activity android:name=".QuizActivity" />
-        <activity android:name=".LessonsActivity" />
+        <activity android:name=".FlashCardActivity" />
         <activity android:name=".DictionaryActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
