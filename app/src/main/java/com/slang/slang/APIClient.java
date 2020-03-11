@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 public class APIClient {
     static String TAG = "HIIII";
 
-    static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/";
+    static String url = "http://slang-dev.us-east-1.elasticbeanstalk.com/";
+    //static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/";
     //static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/db/categories";
     //static String url = "http://google.com/";
 
@@ -81,7 +82,7 @@ public class APIClient {
     }
 
     static ArrayList<String> GetTermsInCategory(String category){
-        String htmlRes = getStr("/db/categories/"+category);
+        String htmlRes = getStr("db/categories/"+category);
 
         htmlRes = htmlRes.substring(1,htmlRes.length()-1);
         Log.d(TAG, htmlRes);
@@ -102,8 +103,8 @@ public class APIClient {
         return terms;
     }
     static ArrayList<String> GetTerm(String english){
-        String htmlRes = getStr("/db/terms/" + english);
-
+        String htmlRes = getStr("db/terms/" + english);
+        if(english.length()==0){ return new ArrayList<String>();}
         htmlRes = htmlRes.substring(1,htmlRes.length()-1);
         Log.d(TAG, htmlRes);
         ArrayList<String> terms = new ArrayList<String>();

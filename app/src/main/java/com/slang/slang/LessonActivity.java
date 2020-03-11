@@ -77,8 +77,8 @@ public class LessonActivity extends AppCompatActivity {
         mediacontroller = new MediaController(this);
         mediacontroller.setAnchorView(vv);
         if(terms.size()>=2) {
-            //uri = Uri.parse(data.get(1));
-            uri = Uri.parse("https://www.demonuts.com/Demonuts/smallvideo.mp4");
+            uri = Uri.parse(terms.get(1));
+            //uri = Uri.parse("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
             Log.d("HI",uri.toString());
             vv.setVideoURI(uri);
             vv.start();
