@@ -58,7 +58,7 @@ public class DictionaryActivity2 extends AppCompatActivity {
             });
             //uri = Uri.parse(terms.get(1));
             uri = Uri.parse("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
-            Log.d("HI",uri.toString());
+            Log.d("HI", uri.toString());
             vv.setVideoURI(uri);
             vv.start();
             vv.setOnCompletionListener ( new MediaPlayer.OnCompletionListener() {
