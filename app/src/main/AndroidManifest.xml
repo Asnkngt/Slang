@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".DictionaryActivity2"></activity>
         <!-- remove this line later -->
-        <activity android:name=".LessonActivity" android:parentActivityName=".LessonsActivity"></activity>
+        <activity
+            android:name=".LessonActivity"
+            android:parentActivityName=".LessonsActivity" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".LessonsActivity" />
         <activity android:name=".DictionaryActivity" />
