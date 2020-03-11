@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -30,7 +30,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        ArrayList<String> lessonNames = APIClient.GetCategories();//getResources().getStringArray(R.array.lesson_names);
+        List<String> lessonNames = APIClient.GetCategories();//getResources().getStringArray(R.array.lesson_names);
         LinearLayout ll = findViewById(R.id.quizzes);
 
         for(int i = 0;i < lessonNames.size(); i++)

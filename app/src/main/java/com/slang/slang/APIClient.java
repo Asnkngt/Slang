@@ -3,7 +3,9 @@ package com.slang.slang;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,14 +17,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class APIClient {
-    static String TAG = "HIIII";
+    static String TAG = "***** LOG *****";
 
     static String url = "http://slang-dev.us-east-1.elasticbeanstalk.com/";
     //static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/";
     //static String url = "http://flask-env.ev6u43m7kb.us-east-2.elasticbeanstalk.com/db/categories";
     //static String url = "http://google.com/";
 
-    private static class Retrieve implements Runnable {
+    private static class Page implements Runnable {
         public String url = null;
         public String res = null;
 
@@ -33,17 +35,18 @@ public class APIClient {
                 BufferedReader in = new BufferedReader(new InputStreamReader(site.openStream()));
                 String input;
                 StringBuffer stringBuffer = new StringBuffer();
-                while ((input = in.readLine()) != null)
-                {
+                while ((input = in.readLine()) != null) {
                     stringBuffer.append(input);
                 }
                 in.close();
                 res = stringBuffer.toString();
+                // Remove beginning and end brackets [] from the string (e.g. ["hi"] -> "hi")
+                res = res.substring(1, res.length() - 1);
                 return;
             } catch (MalformedURLException e) {
-                Log.d(TAG, "GetCategories: " + e.getStackTrace()+ " " + e.getMessage());
+                Log.d(TAG, "GetCategories: " + e.getStackTrace() + " " + e.getMessage());
             } catch (IOException e){
-                Log.d(TAG, "GetCategories: " + e.getStackTrace()+ " " + e.getMessage());
+                Log.d(TAG, "GetCategories: " + e.getStackTrace() + " " + e.getMessage());
             }
             res = "";
             return;
@@ -52,40 +55,32 @@ public class APIClient {
 
     static ExecutorService executor = Executors.newFixedThreadPool(1);//null;
 
-    private static String getStr(String append){
-        Log.d(TAG, "getStr: Start");
-        Retrieve t = new Retrieve();
-        t.url = url + append;
+    private static String getPageData(String subdirectory) {
+        Log.d(TAG, "getPageData: Start");
+        Page page = new Page();
+        page.url = url + subdirectory;
         //executor = Executors.newFixedThreadPool(1);
-        executor.execute(t);
+        executor.execute(page);
         //executor.shutdown();
         //executor = null;
-        while (t.res == null){
-            Log.d(TAG, "getStr: Waiting");
+        while (page.res == null){
+            Log.d(TAG, "getPageData: Waiting");
         }
-        Log.d(TAG, "getStr: Finished");
-        return t.res;
+        Log.d(TAG, "getPageData: Finished");
+        return page.res;
     }
 
-    static ArrayList<String> GetCategories(){
-        String htmlRes = getStr("db/categories");
-
-        ArrayList<String> categories = new ArrayList<String>();
-        while(htmlRes.length() > 1){
-            htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 1);
-            String category = htmlRes.substring(0, htmlRes.indexOf("\""));
-            categories.add(category);
-            htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 1);
-        }
-        //System.out.println(categories);
+    static List<String> GetCategories() {
+        String htmlRes = getPageData("db/categories");
+        List<String> categories = Arrays.asList(htmlRes.split(","));
         return categories;
     }
 
     static ArrayList<String> GetTermsInCategory(String category){
-        String htmlRes = getStr("db/categories/"+category);
+        String htmlRes = getPageData("db/categories/" + category);
 
-        htmlRes = htmlRes.substring(1,htmlRes.length()-1);
-        Log.d(TAG, htmlRes);
+        Log.d("GET_TERMS_IN_CATEGORY: ", htmlRes);
+
         ArrayList<String> terms = new ArrayList<String>();
         while(htmlRes.length() > 2){
             htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 1);
@@ -99,16 +94,17 @@ public class APIClient {
             }
             htmlRes = htmlRes.substring(htmlRes.indexOf("]") + 1);
         }
-        //System.out.println(terms);
         return terms;
     }
     static ArrayList<String> GetTerm(String english){
-        String htmlRes = getStr("db/terms/" + english);
-        if(english.length()==0){ return new ArrayList<String>();}
-        htmlRes = htmlRes.substring(1,htmlRes.length()-1);
-        Log.d(TAG, htmlRes);
+        String htmlRes = getPageData("db/terms/" + english);
+        if (english.length() == 0) {
+            return new ArrayList<String>();
+        }
+        Log.d("GET_TERMS: ", htmlRes);
+
         ArrayList<String> terms = new ArrayList<String>();
-        while(htmlRes.length() > 2){
+        while(htmlRes.length() > 2) {
             htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 1);
             String term = htmlRes.substring(0, htmlRes.indexOf("\""));
             htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 3);

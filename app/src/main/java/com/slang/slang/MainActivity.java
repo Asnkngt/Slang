@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Module[] modules = {
             new Module("Dictionary", DictionaryActivity.class),
             new Module("Flash Cards", FlashCardActivity.class),
-            new Module("Test Your Knowledge", QuizActivity.class),
+            new Module("Quizzes", QuizActivity.class),
     };
 
     private void initTable(int buttonPerRow){

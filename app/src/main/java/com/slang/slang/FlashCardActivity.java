@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FlashCardActivity extends AppCompatActivity {
     public static final String LESSON_NAME = "com.slang.slang.lesson_name";
@@ -33,7 +33,7 @@ public class FlashCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flashcard);
 
         // Adding buttons to the vew based on the list of lesson names
-        ArrayList<String> lessonNames = APIClient.GetCategories();//getResources().getStringArray(R.array.lesson_names);
+        List<String> lessonNames = APIClient.GetCategories();//getResources().getStringArray(R.array.lesson_names);
         LinearLayout ll = findViewById(R.id.lessons);
 
         for(int i = 0;i < lessonNames.size(); i++)
