@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -46,8 +47,15 @@ public class FlashCardActivity2 extends AppCompatActivity {
         }
     }
 
-    private ArrayList<FlashCardObject> prepareData(){
+    private ArrayList<FlashCardObject> prepareData(String category){
         ArrayList<FlashCardObject> flashCardObjects = new ArrayList<FlashCardObject>();
+        ArrayList<String> data = APIClient.GetTermsInCategory(category.replaceAll("\"",""));
+        for(int i=0;i<data.size();i+=2){
+            flashCardObjects.add(new FlashCardObject());
+            flashCardObjects.get(i/2).setTerm(data.get(i));
+            flashCardObjects.get(i/2).setUri(Uri.parse(data.get(i+1)));
+        }
+        /*
         flashCardObjects.add(new FlashCardObject());
         flashCardObjects.add(new FlashCardObject());
         flashCardObjects.add(new FlashCardObject());
@@ -59,7 +67,7 @@ public class FlashCardActivity2 extends AppCompatActivity {
         flashCardObjects.get(0).setUri(Uri.parse("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4"));
         flashCardObjects.get(1).setUri(Uri.parse("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4"));
         flashCardObjects.get(2).setUri(Uri.parse("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4"));
-
+        */
         return flashCardObjects;
     }
 
@@ -79,7 +87,7 @@ public class FlashCardActivity2 extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL,false);
         flashcards.setLayoutManager(layoutManager);
 
-        flashCardObjects = prepareData();
+        flashCardObjects = prepareData(data);
         adapter = new FlashCardAdapter(getApplicationContext(), flashCardObjects);
 
         flashcards.setAdapter(adapter);
