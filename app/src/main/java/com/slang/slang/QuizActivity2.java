@@ -3,6 +3,7 @@ package com.slang.slang;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,27 +52,12 @@ public class QuizActivity2 extends AppCompatActivity {
         selection2 = findViewById(R.id.selection2);
         selection3 = findViewById(R.id.selection3);
         selection4 = findViewById(R.id.selection4);
-
-        //terms = APIClient.GetTerm(data);
-        terms = new ArrayList<String>();
-        terms.add("1");
-        terms.add("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
-        terms.add("2");
-        terms.add("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
-        terms.add("3");
-        terms.add("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
-        terms.add("4");
-        terms.add("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
-        terms.add("5");
-        terms.add("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
-        terms.add("6");
-        terms.add("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
-        terms.add("7");
-        terms.add("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
-        terms.add("8");
-        terms.add("https://slang-backend-mp4-videos.s3.amazonaws.com/twenty/Liz_10.mp4");
+        Log.d("-_-", data.substring(1,data.length()-2));
+        terms = APIClient.GetTermsInCategory(data.replaceAll("\"",""));
 
         vv = findViewById(R.id.videoView);
+        Rect rect = new Rect(0,33, 1440,742);
+        vv.setClipBounds(rect);
         mediacontroller = new MediaController(this);
         mediacontroller.setAnchorView(vv);
         vv.setOnClickListener(new View.OnClickListener() {
