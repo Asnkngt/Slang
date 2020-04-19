@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -54,10 +55,18 @@ public class QuizActivity2 extends AppCompatActivity {
         selection4 = findViewById(R.id.selection4);
         Log.d("-_-", data.substring(1,data.length()-2));
         terms = APIClient.GetTermsInCategory(data.replaceAll("\"",""));
-
         vv = findViewById(R.id.videoView);
-        Rect rect = new Rect(0,33, 1440,742);
-        vv.setClipBounds(rect);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
+
+        vv.post(new Runnable() {
+            @Override
+            public void run() {
+                Rect rect = new Rect(0,vv.getHeight() / 40, vv.getWidth(),(int)(vv.getHeight() /2));
+                vv.setClipBounds(rect);
+            }
+        });
         mediacontroller = new MediaController(this);
         mediacontroller.setAnchorView(vv);
         vv.setOnClickListener(new View.OnClickListener() {
