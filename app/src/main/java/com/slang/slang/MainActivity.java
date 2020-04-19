@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initTable(2);
+        initTable(1);
 
         //APIClient.GetCategories();
         //APIClient.GetTermsInCategory("numbers");
