@@ -33,8 +33,7 @@ public class QuizActivity extends AppCompatActivity {
         List<String> lessonNames = APIClient.GetCategories();//getResources().getStringArray(R.array.lesson_names);
         LinearLayout ll = findViewById(R.id.quizzes);
 
-        for(int i = 0;i < lessonNames.size(); i++)
-        {
+        for (int i = 0; i < lessonNames.size(); i++) {
             Button b = new Button(this);
             b.setText(lessonNames.get(i));
             b.setOnClickListener(new QuizActivity.QuizHandler(lessonNames.get(i)));
