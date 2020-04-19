@@ -57,13 +57,12 @@ public class QuizActivity2 extends AppCompatActivity {
         terms = APIClient.GetTermsInCategory(data.replaceAll("\"",""));
         vv = findViewById(R.id.videoView);
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
-
         vv.post(new Runnable() {
             @Override
             public void run() {
-                Rect rect = new Rect(0,vv.getHeight() / 40, vv.getWidth(),(int)(vv.getHeight() /2));
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
+                Rect rect = new Rect(0,vv.getHeight() / 40, displayMetrics.widthPixels,(int)(vv.getHeight() /2));
                 vv.setClipBounds(rect);
             }
         });
