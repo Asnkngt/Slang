@@ -1,6 +1,7 @@
 package com.slang.slang;
 
 import android.os.AsyncTask;
+import android.os.Debug;
 import android.util.Log;
 
 import java.util.Arrays;
@@ -81,7 +82,6 @@ public class APIClient {
 
         Log.d("GET_TERMS_IN_CATEGORY: ", htmlRes);
 
-
         ArrayList<String> terms = new ArrayList<String>();
         while(htmlRes.length() > 2){
             htmlRes = htmlRes.substring(htmlRes.indexOf("\"") + 1);
@@ -100,7 +100,7 @@ public class APIClient {
 
     static ArrayList<String> GetTerm(String term) {
         String htmlRes = getPageData("db/terms/" + term);
-        if (term.length() == 0) {
+        if (term.length() == 0 || htmlRes.length() == 0) {
             return new ArrayList<String>();
         }
         ArrayList<String> terms = new ArrayList<>();
