@@ -33,9 +33,18 @@ public class QuizActivity extends AppCompatActivity {
         List<String> lessonNames = APIClient.GetCategories();//getResources().getStringArray(R.array.lesson_names);
         LinearLayout ll = findViewById(R.id.quizzes);
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0, 10, 0, 10);
+
         for (int i = 0; i < lessonNames.size(); i++) {
             Button b = new Button(this);
-            b.setText(lessonNames.get(i));
+            b.setLayoutParams(params);
+            b.setText(lessonNames.get(i).substring(1, lessonNames.get(i).length()-1));
+            b.setTextSize(19);
+            b.setBackgroundColor(getResources().getColor(R.color.button));
             b.setOnClickListener(new QuizActivity.QuizHandler(lessonNames.get(i)));
             ll.addView(b);
         }

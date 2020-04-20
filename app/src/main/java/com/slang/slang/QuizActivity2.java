@@ -48,7 +48,7 @@ public class QuizActivity2 extends AppCompatActivity {
         data = intent.getStringExtra(DataKey);
 
         TextView titleText = findViewById(R.id.category_name);
-        titleText.setText(data);
+        titleText.setText(data.substring(1, data.length()-1));
         selection1 = findViewById(R.id.selection1);
         selection2 = findViewById(R.id.selection2);
         selection3 = findViewById(R.id.selection3);

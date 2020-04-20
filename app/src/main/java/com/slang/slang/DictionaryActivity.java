@@ -32,6 +32,6 @@ public class DictionaryActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         if(term.getText().length()==0){return;}
         startActivity(new Intent(DictionaryActivity.this, DictionaryActivity2.class)
-                .putExtra(DictionaryActivity2.DataKey, term.getText().toString()));
+                .putExtra(DictionaryActivity2.DataKey, term.getText().toString().toLowerCase()));
     }
 }
