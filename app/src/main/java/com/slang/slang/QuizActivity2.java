@@ -154,11 +154,13 @@ public class QuizActivity2 extends AppCompatActivity {
 
     // Display correct or wrong depending on answer selected
     public void chooseAnswer(int buttonIndex) {
+        String popupText;
         if (currVocabTermIndex == vocabTermIndices.get(buttonIndex)) {
-            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+            popupText = "Correct!";
         } else {
-            Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
+            popupText = "Wrong! The correct answer was \"" + terms.get(currVocabTermIndex) + "\"";
         }
+        Toast.makeText(this, popupText, Toast.LENGTH_SHORT).show();
         loadNewQuestion();
     }
 }
