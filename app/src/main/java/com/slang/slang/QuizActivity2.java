@@ -25,19 +25,16 @@ public class QuizActivity2 extends AppCompatActivity {
     private String data = null;
 
     private VideoView vv;
-
-    private MediaController mediacontroller;
-
+    private MediaController mediaController;
     private ArrayList<String> terms = new ArrayList<String>();
 
-    private int curr = -1;
-    ArrayList<Integer> selected;
+    private int currVocabTermIndex = -1;
+    ArrayList<Integer> vocabTermIndices;
 
-    private Button selection1;
-    private Button selection2;
-    private Button selection3;
-    private Button selection4;
-
+    private Button selectionButton1;
+    private Button selectionButton2;
+    private Button selectionButton3;
+    private Button selectionButton4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,101 +44,121 @@ public class QuizActivity2 extends AppCompatActivity {
         Intent intent = getIntent();
         data = intent.getStringExtra(DataKey);
 
+        // Set title bar to the current quiz category name
         TextView titleText = findViewById(R.id.category_name);
         titleText.setText(data.substring(1, data.length()-1));
-        selection1 = findViewById(R.id.selection1);
-        selection2 = findViewById(R.id.selection2);
-        selection3 = findViewById(R.id.selection3);
-        selection4 = findViewById(R.id.selection4);
-        Log.d("-_-", data.substring(1,data.length()-2));
-        terms = APIClient.GetTermsInCategory(data.replaceAll("\"",""));
+
+        // Get handles for each selection button
+        selectionButton1 = findViewById(R.id.selection1);
+        selectionButton2 = findViewById(R.id.selection2);
+        selectionButton3 = findViewById(R.id.selection3);
+        selectionButton4 = findViewById(R.id.selection4);
         vv = findViewById(R.id.videoView);
 
+        Log.d("-_-", data.substring(1,data.length()-2));
+        terms = APIClient.GetTermsInCategory(data.replaceAll("\"",""));
+
+        // Render the video
         vv.post(new Runnable() {
             @Override
             public void run() {
                 DisplayMetrics displayMetrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
-                Rect rect = new Rect(0,vv.getHeight() / 40, displayMetrics.widthPixels,(int)(vv.getHeight() /2));
+                Rect rect = new Rect(
+                        0,
+                        vv.getHeight() / 40,
+                        displayMetrics.widthPixels,
+                        (int)(vv.getHeight() / 2)
+                );
                 vv.setClipBounds(rect);
-
             }
         });
-        mediacontroller = new MediaController(this);
-        mediacontroller.setAnchorView(vv);
+        mediaController = new MediaController(this);
+        mediaController.setAnchorView(vv);
+
+        // Toggle pause/play video functionality
         vv.setOnClickListener(new View.OnClickListener() {
             boolean paused = false;
             @Override
             public void onClick(View v) {
-                if(paused){
+                if (paused) {
                     vv.start();
-                }else {
+                } else {
                     vv.pause();
                 }
                 paused = !paused;
             }
         });
-        vv.setOnCompletionListener ( new MediaPlayer.OnCompletionListener() {
+
+        // Replay video on completion functionality
+        vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 vv.start();
             }
         });
 
-        selection1.setOnClickListener(new View.OnClickListener() {
+        selectionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Clicked(0);
+                chooseAnswer(0);
             }
         });
-        selection2.setOnClickListener(new View.OnClickListener() {
+        selectionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Clicked(1);
+                chooseAnswer(1);
             }
         });
-        selection3.setOnClickListener(new View.OnClickListener() {
+        selectionButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Clicked(2);
+                chooseAnswer(2);
             }
         });
-        selection4.setOnClickListener(new View.OnClickListener() {
+        selectionButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Clicked(3);
+                chooseAnswer(3);
             }
         });
 
-        setUp();
+        loadNewQuestion();
     }
 
-    private void setUp(){
-        selected = new ArrayList<Integer>();
+    private void loadNewQuestion() {
         Random rand = new Random();
-        while(selected.size() < 4){
-            int index = rand.nextInt((terms.size()/2)) * 2;
-            if(index!=curr && !selected.contains(index)){
-                selected.add(index);
+        vocabTermIndices = new ArrayList<Integer>();
+
+        // Populate the multiple-choice answers with random words in the quiz category
+        while (vocabTermIndices.size() < 4) {
+            int newVocabTermIndex = rand.nextInt((terms.size() / 2)) * 2;
+            // Choose a new vocab term different from the previous one
+            if (newVocabTermIndex != currVocabTermIndex && !vocabTermIndices.contains(newVocabTermIndex)) {
+                vocabTermIndices.add(newVocabTermIndex);
             }
         }
-        curr = selected.get(rand.nextInt(4));
-        selection1.setText(terms.get(selected.get(0)));
-        selection2.setText(terms.get(selected.get(1)));
-        selection3.setText(terms.get(selected.get(2)));
-        selection4.setText(terms.get(selected.get(3)));
+        selectionButton1.setText(terms.get(vocabTermIndices.get(0)));
+        selectionButton2.setText(terms.get(vocabTermIndices.get(1)));
+        selectionButton3.setText(terms.get(vocabTermIndices.get(2)));
+        selectionButton4.setText(terms.get(vocabTermIndices.get(3)));
 
-        Uri uri = Uri.parse(terms.get(curr+1));
+        // Set the current vocab term to be one of the multiple-choice answers
+        currVocabTermIndex = vocabTermIndices.get(rand.nextInt(4));
+
+        // Render the video of the newly selected vocab term
+        Uri uri = Uri.parse(terms.get(currVocabTermIndex + 1));
         vv.setVideoURI(uri);
         vv.start();
     }
 
-    public void Clicked(int button) {
-        if(curr == selected.get(button)) {
+    // Display correct or wrong depending on answer selected
+    public void chooseAnswer(int buttonIndex) {
+        if (currVocabTermIndex == vocabTermIndices.get(buttonIndex)) {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         }
-        setUp();
+        loadNewQuestion();
     }
 }
