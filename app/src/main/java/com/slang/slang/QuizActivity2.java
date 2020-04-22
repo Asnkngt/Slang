@@ -29,12 +29,18 @@ public class QuizActivity2 extends AppCompatActivity {
     private ArrayList<String> terms = new ArrayList<String>();
 
     private int currVocabTermIndex = -1;
-    ArrayList<Integer> vocabTermIndices;
+    private ArrayList<Integer> vocabTermIndices;
 
     private Button selectionButton1;
     private Button selectionButton2;
     private Button selectionButton3;
     private Button selectionButton4;
+
+    // Progress and performance indicators
+    private int answered = 0;
+    private int answeredCorrectly = 0;
+    static int MAX_NUM_QUESTIONS = 10;
+    private TextView progressText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +52,17 @@ public class QuizActivity2 extends AppCompatActivity {
 
         // Set title bar to the current quiz category name
         TextView titleText = findViewById(R.id.category_name);
-        titleText.setText(data.substring(1, data.length()-1));
+        titleText.setText(data.substring(1, data.length() - 1).toUpperCase());
 
-        // Get handles for each selection button
+        // Get handles for each UI element
         selectionButton1 = findViewById(R.id.selection1);
         selectionButton2 = findViewById(R.id.selection2);
         selectionButton3 = findViewById(R.id.selection3);
         selectionButton4 = findViewById(R.id.selection4);
         vv = findViewById(R.id.videoView);
+        progressText = findViewById(R.id.progress);
 
-        Log.d("-_-", data.substring(1,data.length()-2));
+        // Load all vocab terms in the quiz category
         terms = APIClient.GetTermsInCategory(data.replaceAll("\"",""));
 
         // Render the video
@@ -150,6 +157,9 @@ public class QuizActivity2 extends AppCompatActivity {
         Uri uri = Uri.parse(terms.get(currVocabTermIndex + 1));
         vv.setVideoURI(uri);
         vv.start();
+
+        // Update progress
+        progressText.setText(answeredCorrectly + " Correct \n" + answered + "/" + MAX_NUM_QUESTIONS);
     }
 
     // Display correct or wrong depending on answer selected
@@ -157,10 +167,20 @@ public class QuizActivity2 extends AppCompatActivity {
         String popupText;
         if (currVocabTermIndex == vocabTermIndices.get(buttonIndex)) {
             popupText = "Correct!";
+            answeredCorrectly += 1;
         } else {
             popupText = "Wrong! The correct answer was \"" + terms.get(currVocabTermIndex) + "\"";
         }
+        answered += 1;
         Toast.makeText(this, popupText, Toast.LENGTH_SHORT).show();
-        loadNewQuestion();
+
+        if (answered >= MAX_NUM_QUESTIONS) {
+            // Redirect to new page here
+            progressText.setText("DONE! " + answeredCorrectly + "/" + MAX_NUM_QUESTIONS + " Correct");
+
+        }
+        else {
+            loadNewQuestion();
+        }
     }
 }
