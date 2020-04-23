@@ -182,7 +182,7 @@ public class QuizActivity2 extends AppCompatActivity {
             TextView results = findViewById(R.id.results);
             Button returnToQuizzesButton = findViewById(R.id.returnToQuizzesButton);
 
-            results.setText("Your score is: " + answered + "/" + MAX_NUM_QUESTIONS );
+            results.setText("Your score is: " + answeredCorrectly + "/" + MAX_NUM_QUESTIONS );
             results.setGravity(Gravity.CENTER);
 
             returnToQuizzesButton.setOnClickListener(new View.OnClickListener() {
