@@ -8,7 +8,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
@@ -52,7 +52,7 @@ public class QuizActivity2 extends AppCompatActivity {
 
         // Set title bar to the current quiz category name
         TextView titleText = findViewById(R.id.category_name);
-        titleText.setText(data.substring(1, data.length() - 1).toUpperCase());
+        titleText.setText(data.substring(1, data.length() - 1));
 
         // Get handles for each UI element
         selectionButton1 = findViewById(R.id.selection1);
@@ -160,6 +160,7 @@ public class QuizActivity2 extends AppCompatActivity {
 
         // Update progress
         progressText.setText(answeredCorrectly + " Correct \n" + answered + "/" + MAX_NUM_QUESTIONS);
+        progressText.setGravity(Gravity.RIGHT);
     }
 
     // Display correct or wrong depending on answer selected
@@ -175,12 +176,39 @@ public class QuizActivity2 extends AppCompatActivity {
         Toast.makeText(this, popupText, Toast.LENGTH_SHORT).show();
 
         if (answered >= MAX_NUM_QUESTIONS) {
-            // Redirect to new page here
-            progressText.setText("DONE! " + answeredCorrectly + "/" + MAX_NUM_QUESTIONS + " Correct");
+            // Once the quiz is complete, set the view to the results page
+            setContentView(R.layout.activity_quiz_complete);
 
+            TextView results = findViewById(R.id.results);
+            Button returnToQuizzesButton = findViewById(R.id.returnToQuizzesButton);
+
+            results.setText("Your score is: " + answered + "/" + MAX_NUM_QUESTIONS );
+            results.setGravity(Gravity.CENTER);
+
+            returnToQuizzesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
         else {
             loadNewQuestion();
         }
     }
+
+    // Once the quiz is complete, redirect the user to the QuizCompletionPage
+//    private class QuizHandler implements View.OnClickListener {
+////        String category;
+////        public QuizHandler(String category){
+////            this.category = category;
+////        }
+//
+//        @Override
+//        public void onClick(View v) {
+//            startActivity(new Intent(QuizActivity2.this, QuizCompleteActivity.class));
+////            startActivity(new Intent(QuizActivity2.this, QuizCompleteActivity.class)
+////                    .putExtra(QuizCompleteActivity.DataKey, category));
+//        }
+//    }
 }
