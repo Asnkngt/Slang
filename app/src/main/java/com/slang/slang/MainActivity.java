@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button dict = findViewById(R.id.Dictionary);
-        Button less = findViewById(R.id.Lessons);
+        Button less = findViewById(R.id.FlashCards);
         Button quiz = findViewById(R.id.Quizzes);
 
         dict.setOnClickListener(new View.OnClickListener() {
