@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/Asnkngt/Slang/master/slang.png">
+
 # Overview
 * Slang is an Android app to help users learn American Sign Language
 * Slang requires [the backend](https://github.com/slang-senior-design/backend) to be deployed to the cloud before it can run
