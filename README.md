@@ -1,7 +1,9 @@
+# Slang (Sign + Language)
+
 <img src="https://raw.githubusercontent.com/Asnkngt/Slang/master/slang.png">
 
 # Overview
-* Slang is an Android app to help users learn American Sign Language
+* Slang is an Android app to help users learn American Sign Language, a.k.a. "the Duolingo of sign language"
 * Slang requires [the backend](https://github.com/slang-senior-design/backend) to be deployed to the cloud before it can run
 locally
 * The dataset `clean-dataset.csv` is stored in the backend
